@@ -14,7 +14,7 @@ pip install .
 ## Usage
 
 ````
-texfx intpu_file.tex -o output_file.tex -d figure_directory
+texfx input_file.tex -o output_file.tex -d figure_directory
 ````
 ## Caveats
 
