@@ -1,0 +1,43 @@
+#! /usr/bin/env python
+import argparse
+import os
+import texfx
+from texfx.parser import Parser
+
+parser = argparse.ArgumentParser()
+parser.add_argument('filename', help='The .tex file from which to extract image files.', nargs=1)
+parser.add_argument('-o', help='File to store the modified TeX document to.', nargs=1)
+parser.add_argument('-d', help='Directory to which to copy image files.', nargs=1)
+
+args = parser.parse_args()
+
+input_file = args.filename[0]
+if not os.path.exists(input_file):
+    print("Error: Input file doesn't exist.")
+
+output_file = args.o
+if not output_file is None:
+    output_file = output_file[0]
+image_folder = args.d
+if image_folder is None:
+    image_folder = ""
+else:
+    image_folder = image_folder[0]
+
+################################################################################
+# Parse document
+################################################################################
+
+parser = Parser(input_file, dest=image_folder)
+
+# Copy files.
+if (image_folder):
+    parser.copy_files()
+
+# Print processed document.
+if (output_file):
+    with open(output_file, "w") as file:
+        file.write(parser.output)
+else:
+    print(parser.output)
+
